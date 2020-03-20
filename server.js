@@ -8,7 +8,11 @@ const user = require('./routes/api/user');
 
 const app = express();
 
+//Connect to Database
 connectDB();
+
+//Init MiddleWare
+app.use(express.json({extended : false}));
 
 const PORT = process.env.PORT || 5000; 
 
@@ -17,8 +21,6 @@ app.use('/api/users' , user);
 app.use('./api/posts' , post);
 app.use('./api/profiles' , profile);
 app.use('./api/auth' , authentication);
-
-app.get('/' , (req , res) => res.send('API Running'));
 
 app.listen(PORT , () => {
     console.log(`Server started on port ${PORT}`);
