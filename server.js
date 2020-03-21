@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 //@routes Points to Routes Folder
 app.use('/api/users' , user);
 app.use('/api/posts' , post);
-app.use('/api/profiles' , profile);
+app.use('/api/profile' , profile);
 app.use('/api/auth' , auth);
 
 app.listen(PORT , () => {
