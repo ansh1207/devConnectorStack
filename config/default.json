@@ -1,4 +1,4 @@
 {
-    "mongoURI" : "mongodb+srv://anshul_1207:127chapslee@cluster0-w6s7f.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret" : "MysecretToken"
+    "mongoURI": "mongodb+srv://anshul_1207:127chapslee@cluster0-w6s7f.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "MysecretToken"    
 }
