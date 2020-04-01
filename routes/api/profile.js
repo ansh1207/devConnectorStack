@@ -4,6 +4,8 @@ const router = express.Router();
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
+const config = require('config');
+const axios = require('axios');
 
 //@route   GET api/profile/me
 //@desc    Get current users Profile
@@ -265,26 +267,24 @@ router.put('/education', [auth, [
     }
 });
 
-//@route   DELETE api/profile/education/:edu_id
-//@desc    Delete Profile Education
-//@access  Private
-router.delete('/education/:edu_id', auth, async (req, res) => {
+//@route   GET api/profile/github/:username
+//@desc    Get user repos from github
+//@access  Public
+router.get('/github/:username', async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.user.id });
+        const uri = encodeURI(
+            `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+        );
+        const headers = {
+            'user-agent': 'node.js',
+            Authorization: `token ${config.get('githubToken')}`
+        };
 
-        //Get Remove Index
-
-        const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
-
-        profile.education.splice(removeIndex, 1);
-
-        await profile.save();
-
-        res.json(profile);
-
+        const gitHubResponse = await axios.get(uri, { headers });
+        return res.json(gitHubResponse.data);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server Error');
+        res.status(404).send('No Such Profile Found');
     }
 });
 
