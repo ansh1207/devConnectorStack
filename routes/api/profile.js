@@ -134,10 +134,10 @@ router.get('/user/:user_id', async (req, res) => {
 router.delete('/', auth, async (req, res) => {
     try {
         //Remove Profile
-        await Profile.findOneAndRemove({ user: req.user.id });
-        await User.findOneAndRemove({ id: req.user.id });
+        await Profile.findOneAndDelete({ user: req.user.id });
+        await User.findOneAndDelete({ _id: req.user.id });
 
-        res.json({ message: 'User Deleted' });
+        return res.json({ message: 'User Deleted' });
 
     } catch (error) {
         console.log(error.message);
@@ -216,6 +216,31 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+//@route   DELETE api/profile/education/:edu_id
+//@desc    Delete Profile Education
+//@access  Private
+router.delete('/education/:edu_id', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        //Get Remove Index
+
+        const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
+
+        profile.education.splice(removeIndex, 1);
+
+        await profile.save();
+
+        res.json(profile);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
 
 //@route   PUT api/profile/education
 //@desc    Add Profile Education

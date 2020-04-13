@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
         res.json(user);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server Error');
+        return res.status(500).send('Server Error');
     }
 });
 
@@ -26,11 +26,11 @@ router.get('/', auth, async (req, res) => {
 //@access Public
 router.post('/', [
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Passowrd is required').exists()
+    check('password', 'Password is required').exists()
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({
+        return res.status(400).json({
             errors: errors.array()
         });
     }
@@ -42,13 +42,13 @@ router.post('/', [
 
         // See if user exists
         if (!user) {
-            res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
 
         const payload = {
@@ -66,7 +66,7 @@ router.post('/', [
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server Error: ' + error.message);
+        return res.status(500).send('Server Error: ' + error.message);
     }
 }
 );
