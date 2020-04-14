@@ -21,7 +21,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
     });
 
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
-
+    // eslint-disable-next-line
     useEffect(() => {
         getCurrentProfile();
         setFormData({
@@ -38,7 +38,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
             youtube: loading || !profile.youtube ? '' : profile.youtube,
             instagram: loading || !profile.instagram ? '' : profile.instagram
         });
-    }, [loading]);
+    }, [loading, getCurrentProfile]);
 
     const {
         company,
