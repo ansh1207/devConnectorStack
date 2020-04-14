@@ -19,7 +19,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
                 {
                     profiles.length > 0 ?
                         profiles.map(profile => (
-                            <ProfileItem key={profile.id} profile={profile} >
+                            <ProfileItem key={profile._id} profile={profile} >
 
                             </ProfileItem>
                         )) :
