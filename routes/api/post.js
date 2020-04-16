@@ -170,7 +170,7 @@ router.post('/comment/:id', [auth, [
             text: req.body.text,
             name: user.name,
             avatar: user.avatar,
-            user: req.user.id
+            user: req.user._id
         }
 
         post.comments.unshift(newComment);
