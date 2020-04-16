@@ -5,11 +5,11 @@ import { getPosts } from '../../actions/post';
 import Spinner from '../layout/Spinner';
 import PostItem from './PostItem';
 
-const Posts = ({ getPosts, post: { post, loading } }) => {
+const Posts = ({ getPosts, post: { posts, loading } }) => {
     useEffect(() => {
         getPosts();
     }, [getPosts]);
-
+    console.log('Posts are', Posts);
     return loading ? <Spinner /> :
         <Fragment>
             <h1 className='large text-primary'>Posts</h1>
@@ -17,7 +17,7 @@ const Posts = ({ getPosts, post: { post, loading } }) => {
                 <i className='fas fa-user' />Welcome to the community\
             </p>
             <div className='posts'>
-                {Posts.map(post => (
+                {posts.map(post => (
                     <PostItem key={post._id} post={post}></PostItem>
                 ))}
             </div>
