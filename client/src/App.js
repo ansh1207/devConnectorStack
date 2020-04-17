@@ -17,7 +17,6 @@ import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 
 import './App.css';
-//Redux
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
